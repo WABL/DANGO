@@ -1,0 +1,11 @@
+1. install maven libraries
+com.fasterxml.jackson.core:jackson-core:2.8.9
+com.fasterxml.jackson.core:jackson-databind:2.8.9
+javax.servlet:servlet-api:2.4
+
+2. Configure Tomcat local server
+
+3. Remove Spring module in Project Settings
+And re-add Spring & Spring MVC
+
+4. Run it!
