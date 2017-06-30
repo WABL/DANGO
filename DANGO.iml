@@ -32,8 +32,8 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="Spring-4.3.9.RELEASE" level="project" />
     <orderEntry type="library" name="Spring MVC-4.3.0.RELEASE" level="project" />
     <orderEntry type="library" name="Arquillian JUnit:Release" level="project" />
+    <orderEntry type="library" name="Spring MVC-4.3.9.RELEASE" level="project" />
   </component>
 </module>
