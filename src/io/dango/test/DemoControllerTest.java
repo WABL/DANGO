@@ -60,8 +60,12 @@ public class DemoControllerTest {
 
     @Test
     public void error() throws Exception {
-        
+        HttpMethod method = new GetMethod("http://localhost:8080/error");
+        int statusCode = httpClient.executeMethod(method);
 
+        Assert.assertEquals(HttpStatus.NOT_FOUND.value(), statusCode);
+
+        System.out.println(HttpStatus.NOT_FOUND.value()+" "+statusCode);
     }
 
     // Use RestTemplate test via getForObject form 1
