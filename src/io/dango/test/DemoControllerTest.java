@@ -10,9 +10,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 54472 on 2017/6/30.
@@ -59,9 +61,26 @@ public class DemoControllerTest {
 
     }
 
-    // Use RestTemplate test via getForObject
+    // Use RestTemplate test via getForObject form 1
     @Test
     public void faceNotFound() throws Exception {
+        int id = 777;
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpClientErrorException error = null;
+        try {
+            restTemplate.getForObject("http://localhost:8080/findFace/{uid}", Error.class, id);
+        } catch (HttpClientErrorException e) {
+            error = e;
+        }
+
+        Assert.assertNotNull(error);
+
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, ?> body = mapper.readValue(error.getResponseBodyAsString(), new TypeReference<Map<String, ?>>() { });
+
+        Assert.assertEquals(2, body.get("code"));
+        Assert.assertEquals("face not match of by user id " + id, body.get("message"));
     }
 
     @Test
