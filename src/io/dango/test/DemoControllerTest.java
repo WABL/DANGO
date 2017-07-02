@@ -9,10 +9,12 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -89,9 +91,19 @@ public class DemoControllerTest {
 
     }
 
+    // Use HttpEntity and RestTemplate.postForObject to POST JSON to server
     @Test
     public void saveFace() throws Exception {
+        // Set HTTP header Content-Type to "application/json"
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
+        HttpEntity<String> entity = new HttpEntity<>("Face-Content", headers);
+        RestTemplate template = new RestTemplate();
+        String response =  template.postForObject("http://localhost:8080/saveFace", entity, String.class);
+
+        // Assert response not null
+        Assert.assertNotNull(response);
     }
 
     @Test
@@ -99,9 +111,25 @@ public class DemoControllerTest {
 
     }
 
+    // Use HttpEntity and RestTemplate.postForEntity to POST JSON to server & locate URI
     @Test
     public void saveFace3() throws Exception {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
+        HttpEntity<String> entity = new HttpEntity<>("Face3-Content", headers);
+        RestTemplate template = new RestTemplate();
+        ResponseEntity<ArrayList<String>> responseEntity = template.postForEntity(
+                "http://localhost:8080/saveFace3",
+                entity,
+                (Class<ArrayList<String>>) new ArrayList<String>().getClass());
+
+        Assert.assertNotNull(responseEntity);
+        Assert.assertNotNull(responseEntity.getBody());
+        Assert.assertNotNull(responseEntity.getHeaders());
+
+        URI url = responseEntity.getHeaders().getLocation();
+        Assert.assertEquals("http://localhost:8080/face/233", url.toString());
     }
 
 }
