@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -115,16 +116,18 @@ public class DemoControllerTest {
 
     }
 
-    // Use HttpEntity and RestTemplate.postForEntity to POST JSON to server & locate URI
+    // Use RestTemplate.exchange to POST JSON to server & locate URI
     @Test
     public void saveFace3() throws Exception {
         HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
         HttpEntity<String> entity = new HttpEntity<>("Face3-Content", headers);
         RestTemplate template = new RestTemplate();
-        ResponseEntity<ArrayList<String>> responseEntity = template.postForEntity(
+        ResponseEntity<ArrayList<String>> responseEntity = template.exchange(
                 "http://localhost:8080/saveFace3",
+                org.springframework.http.HttpMethod.POST,
                 entity,
                 (Class<ArrayList<String>>) new ArrayList<String>().getClass());
 
