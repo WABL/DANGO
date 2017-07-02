@@ -25,7 +25,7 @@ public class DemoControllerTest {
 
     @Before
     public void before() {
-        HttpClient httpClient = new HttpClient();
+        httpClient = new HttpClient();
     }
 
     @After
@@ -58,6 +58,7 @@ public class DemoControllerTest {
 
     @Test
     public void error() throws Exception {
+        
 
     }
 
