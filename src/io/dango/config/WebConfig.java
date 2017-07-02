@@ -18,19 +18,4 @@ import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 @EnableWebMvc
 @ComponentScan("io.dango")
 public class WebConfig extends WebMvcConfigurerAdapter {
-
-    @Bean
-    public ViewResolver viewResolver(ContentNegotiationManager contentNegotiationManager) {
-        ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
-        resolver.setContentNegotiationManager(contentNegotiationManager);
-
-        return resolver;
-    }
-
-    @Override
-
-    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-        configurer.defaultContentType(MediaType.APPLICATION_JSON_UTF8);
-    }
-
 }
