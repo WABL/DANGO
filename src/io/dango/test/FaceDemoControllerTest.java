@@ -22,7 +22,7 @@ public class FaceDemoControllerTest {
         template.getMessageConverters().add(new ByteArrayHttpMessageConverter());
 
         LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap();
-        params.add("photo", new FileSystemResource(getClass().getResource("profile.jpeg").getFile()));
+        params.add("photo", new FileSystemResource(getClass().getResource("2.jpg").getFile()));
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);

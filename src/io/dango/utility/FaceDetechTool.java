@@ -1,7 +1,6 @@
 package io.dango.utility;
 
 import org.opencv.core.*;
-import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 import org.springframework.core.io.ClassPathResource;
@@ -55,13 +54,13 @@ public class FaceDetechTool {
 
         System.out.println(String.format("Detected %s faces", faceDetections.toArray().length));
         for(Rect rect : faceDetections.toArray()) {
-            Imgproc.rectangle(image_final, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height), new Scalar(0, 255, 0));
+            Imgproc.rectangle(image_final, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height), new Scalar(0, 255, 0), 5);
 
         }
 
-        String filename = "faceDetection.png";
-        System.out.println(String.format("Writing %s", filename));
-        Imgcodecs.imwrite(filename, image_final);
+//        String filename = "faceDetection.png";
+//        System.out.println(String.format("Writing %s", filename));
+//        Imgcodecs.imwrite(filename, image_final);
         return matToBufferedImage(image_final);
 
     }

@@ -1,5 +1,7 @@
 package io.dango.controller;
 
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import io.dango.utility.FaceDetechTool;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by MainasuK on 2017-7-3.
@@ -23,8 +28,9 @@ public class FaceDemoController {
         InputStream in = new ByteArrayInputStream(photo.getBytes());
         BufferedImage image = new FaceDetechTool().detechFace(ImageIO.read(in));
 
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ImageIO.write(image, ".jpg",out);
-        return out.toByteArray();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(baos);
+        encoder.encode(image);
+        return baos.toByteArray();
     }
 }
