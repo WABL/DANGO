@@ -113,6 +113,30 @@ public class DemoControllerTest {
 
     @Test
     public void saveFace2() throws Exception {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
+        HttpEntity<String> entity = new HttpEntity<>("Face2-Content", headers);
+        RestTemplate template = new RestTemplate();
+
+//        use RestTemplate.postForObject
+
+//        String response = template.postForObject("http://localhost:8080/saveFace2", entity, String.class);
+//        Assert.assertNotNull(response);
+
+//        use RestTemplate.exchange
+        
+        ResponseEntity<ArrayList<String>> responseEntity = template.exchange(
+                "http://localhost:8080/saveFace2",
+                org.springframework.http.HttpMethod.POST,
+                entity,
+                (Class<ArrayList<String>>) new ArrayList<String>().getClass());
+
+        Assert.assertNotNull(responseEntity);
+        URI url = responseEntity.getHeaders().getLocation();
+        Assert.assertEquals("http://localhost:8080/findFace/233", url.toString());
+
 
     }
 
