@@ -14,7 +14,7 @@ import javax.sql.DataSource;
  */
 
 @Configuration
-@PropertySource("classpath:/io.dango/jdbc.properties")
+@PropertySource("classpath:/io/dango/jdbc.properties")
 public class DBConfig {
 
     @Bean
