@@ -39,7 +39,7 @@ public class JDBCUserRepositoryTest {
     public void getUserByUsername() throws Exception {
         User user = userRepository.getUserByUsername("user");
         Assert.notNull(user, "user");
-        assertEquals("usr", user.getUsername());
+        assertEquals("user", user.getUsername());
     }
 
     @Test
