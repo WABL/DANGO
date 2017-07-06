@@ -24,13 +24,18 @@ public class JDBCUserRepository implements UserRepository {
     }
 
     @Override
+    public User getUserByUsername(String username) {
+        return jdbcTemplate.queryForObject("select * from user u where u.username = ?", (resultSet, i) -> new User(resultSet), username);
+    }
+
+    @Override
     public void saveUser(User user) {
         // TODO:
     }
 
     @Override
     public boolean verify(String username, String passworld) {
-        return (null == jdbcTemplate.queryForObject("select * from user u where u.username = ? AND u.passworld = ?", (resultSet, i) -> new User(resultSet), username, passworld)) ? false : true;
+        return (null == jdbcTemplate.queryForObject("select * from user u where u.username = ? AND u.password = ?", (resultSet, i) -> new User(resultSet), username, passworld)) ? false : true;
 
     }
 

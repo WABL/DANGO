@@ -33,8 +33,13 @@ public class JDBCUserRepositoryTest {
     public void getUserById() throws Exception {
         User user = userRepository.getUserById(1);
         Assert.notNull(user, "root");
+    }
 
-        System.out.println(user.getPassword());
+    @Test
+    public void getUserByUsername() throws Exception {
+        User user = userRepository.getUserByUsername("user");
+        Assert.notNull(user, "user");
+        assertEquals("usr", user.getUsername());
     }
 
     @Test
