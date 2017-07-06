@@ -7,4 +7,6 @@ import io.dango.entity.User;
  */
 public interface UserRepository {
     User getUserById(long id);
+    void saveUser(User user);
+    boolean verify(String username, String passworld);
 }

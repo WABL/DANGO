@@ -1,10 +1,13 @@
 package io.dango.repository;
 
 import io.dango.config.DBConfig;
+import io.dango.config.WebConfig;
 import io.dango.entity.User;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
@@ -19,7 +22,12 @@ import static org.junit.Assert.*;
 public class JDBCUserRepositoryTest {
 
     @Autowired
-    JDBCUserRepository userRepository;
+    private JDBCUserRepository userRepository;
+
+    @Test
+    public void testRepository() {
+        Assert.notNull(userRepository);
+    }
 
     @Test
     public void getUserById() throws Exception {
@@ -27,6 +35,17 @@ public class JDBCUserRepositoryTest {
         Assert.notNull(user, "root");
 
         System.out.println(user.getPassword());
+    }
+
+    @Test
+    public void saveUser() throws Exception {
+        // TODO:
+    }
+
+    @Test
+    public void verify() throws Exception {
+        boolean isVerified = userRepository.verify("user", "USER");
+        assertEquals(true, isVerified);
     }
 
 }

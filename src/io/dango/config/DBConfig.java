@@ -3,6 +3,7 @@ package io.dango.config;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,6 +16,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @PropertySource("classpath:/io/dango/jdbc.properties")
+@ComponentScan(basePackages = "io.dango.repository")
 public class DBConfig {
 
     @Bean
@@ -28,7 +30,7 @@ public class DBConfig {
         ds.setUrl(url);
         ds.setUsername(username);
         ds.setPassword(password);
-        ds.setInitialSize(5);
+        ds.setInitialSize(3);
         ds.setMaxActive(10);
 
         return ds;
