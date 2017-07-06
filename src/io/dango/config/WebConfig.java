@@ -19,7 +19,7 @@ import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan("io.dango")
+@ComponentScan("io.dango.controller")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Bean
