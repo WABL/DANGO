@@ -30,7 +30,7 @@ public class DBConfig {
         ds.setUrl(url);
         ds.setUsername(username);
         ds.setPassword(password);
-        ds.setInitialSize(3);
+        ds.setInitialSize(1);
         ds.setMaxActive(10);
 
         return ds;

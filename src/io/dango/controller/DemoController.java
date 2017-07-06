@@ -2,6 +2,8 @@ package io.dango.controller;
 
 import io.dango.pojo.Error;
 import io.dango.pojo.FaceNotFoundException;
+import io.dango.repository.JDBCUserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,9 @@ import java.util.List;
  */
 @RestController
 public class DemoController {
+
+    @Autowired
+    JDBCUserRepository jdbcUserRepository;
 
     // Return hello JSON
     @RequestMapping(path = "/demo", method = RequestMethod.GET)
@@ -108,5 +113,19 @@ public class DemoController {
         return new ResponseEntity<>(list, headers, HttpStatus.CREATED);
     }
 
+    @RequestMapping(path = "/login", method = RequestMethod.GET)
+    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
+        boolean isVerified;
+        try {
+            isVerified = jdbcUserRepository.verify(username, password);
+            if (isVerified) {
+                return new ResponseEntity<>("YES", HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return new ResponseEntity<>("NO", HttpStatus.OK);
+    }
 
 }
