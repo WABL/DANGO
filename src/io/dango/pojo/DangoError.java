@@ -3,11 +3,11 @@ package io.dango.pojo;
 /**
  * Created by MainasuK on 2017-6-30.
  */
-public class Error {
+public class DangoError {
     private int code;
     private String message;
 
-    public Error(int code, String message) {
+    public DangoError(int code, String message) {
         this.code = code;
         this.message = message;
     }

@@ -1,6 +1,6 @@
 package io.dango.controller;
 
-import io.dango.pojo.Error;
+import io.dango.pojo.DangoError;
 import io.dango.pojo.FaceNotFoundException;
 import io.dango.repository.JDBCUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class DemoController {
         HttpStatus status = HttpStatus.NOT_FOUND;
 
         if (null == list) {
-            Error error = new Error(1, "not found");
+            DangoError error = new DangoError(1, "not found");
             return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
         }
 
@@ -50,9 +50,9 @@ public class DemoController {
     // Return 404 when find face with userID via Exception
     @ExceptionHandler(FaceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Error faceNotFound(FaceNotFoundException e) {
+    public DangoError faceNotFound(FaceNotFoundException e) {
         long userID = e.getUserID();
-        return new Error(2, "face not match of by user id " + userID);
+        return new DangoError(2, "face not match of by user id " + userID);
     }
 
     // As above

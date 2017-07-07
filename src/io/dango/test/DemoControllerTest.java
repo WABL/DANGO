@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Assert;
@@ -165,7 +166,7 @@ public class DemoControllerTest {
     }
 
     @Test
-    public void testJSON() {
+    public void testJSON() throws JSONException {
         JSONObject jsonObject = new JSONObject("{\"username\":\"user\"}");
         Assert.assertEquals("user", jsonObject.get("username"));
     }

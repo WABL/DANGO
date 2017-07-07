@@ -1,8 +1,8 @@
 package io.dango.entity;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.List;
+//import javax.persistence.*;
+//import javax.validation.constraints.NotNull;
+//import java.util.List;
 
 /**
  * Created by MainasuK on 2017-7-6.
