@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -163,4 +164,9 @@ public class DemoControllerTest {
         Assert.assertEquals("http://localhost:8080/face/233", url.toString());
     }
 
+    @Test
+    public void testJSON() {
+        JSONObject jsonObject = new JSONObject("{\"username\":\"user\"}");
+        Assert.assertEquals("user", jsonObject.get("username"));
+    }
 }

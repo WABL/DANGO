@@ -12,3 +12,16 @@ org.openpnp:opencv:3.2.0-1
 And re-add Spring & Spring MVC
 
 4. Run it!
+
+
+*****
+Link OpenCV lib with Tomcat
+VM options: -Djava.library.path=<path_of_lib>
+
+
+*****
+Build OpenCV under Linux/Mac OS
+1. install ant (> brew install ant)
+2. cmake -D BUILD_SHARED_LIBS=OFF .. (And check Java config set right)
+3. make -j8
+
