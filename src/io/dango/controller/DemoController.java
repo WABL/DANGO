@@ -3,6 +3,7 @@ package io.dango.controller;
 import io.dango.pojo.DangoError;
 import io.dango.pojo.FaceNotFoundException;
 import io.dango.repository.JDBCUserRepository;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

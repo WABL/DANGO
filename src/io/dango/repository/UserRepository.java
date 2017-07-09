@@ -10,4 +10,5 @@ public interface UserRepository {
     User getUserByUsername(String username);
     void saveUser(User user);
     boolean verify(String username, String passworld);
+    boolean removeByUsername(String username);
 }

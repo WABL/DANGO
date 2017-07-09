@@ -170,4 +170,5 @@ public class DemoControllerTest {
         JSONObject jsonObject = new JSONObject("{\"username\":\"user\"}");
         Assert.assertEquals("user", jsonObject.get("username"));
     }
+
 }

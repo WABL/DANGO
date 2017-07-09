@@ -4,6 +4,7 @@ import io.dango.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by MainasuK on 2017-7-6.
@@ -29,14 +30,21 @@ public class JDBCUserRepository implements UserRepository {
     }
 
     @Override
+    @Transactional
     public void saveUser(User user) {
-        // TODO:
+        jdbcTemplate.update("INSERT INTO user (username, password) VALUES (?, ?)", user.getUsername(), user.getPassword());
     }
 
     @Override
     public boolean verify(String username, String passworld) {
         return (null == jdbcTemplate.queryForObject("select * from user u where u.username = ? AND u.password = ?", (resultSet, i) -> new User(resultSet), username, passworld)) ? false : true;
 
+    }
+
+    @Override
+    public boolean removeByUsername(String username) {
+        // TODO:
+        return false;
     }
 
 }
