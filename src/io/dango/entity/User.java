@@ -15,6 +15,12 @@ public class User {
     public User() {
     }
 
+    public User(User user) {
+        this.id = user.id;
+        this.username = user.username;
+        this.password = user.password;
+    }
+
     public User(ResultSet resultSet) throws SQLException {
         this.id = resultSet.getLong("id");
         this.username = resultSet.getString("username");

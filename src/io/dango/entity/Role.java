@@ -1,13 +1,11 @@
 package io.dango.entity;
 
-//import javax.persistence.*;
-//import javax.validation.constraints.NotNull;
-//import java.util.List;
+import org.springframework.security.core.GrantedAuthority;
 
 /**
  * Created by MainasuK on 2017-7-6.
  */
-public class Role {
+public class Role implements GrantedAuthority {
 
     private Long id;
     private RoleName roleName;
@@ -29,4 +27,8 @@ public class Role {
         this.roleName = roleName;
     }
 
+    @Override
+    public String getAuthority() {
+        return "ROLE_USER";
+    }
 }
