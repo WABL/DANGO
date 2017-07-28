@@ -23,6 +23,7 @@
           <element id="library" level="project" name="org.json:json:20140107" />
           <element id="library" level="project" name="Spring Security-3.2.5" />
           <element id="library" level="project" name="org.springframework.security.oauth:spring-security-oauth2:2.1.1.RELEASE" />
+          <element id="library" level="project" name="io.jsonwebtoken:jjwt:0.7.0" />
         </element>
       </element>
     </root>
