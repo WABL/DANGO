@@ -14,7 +14,7 @@ import java.io.FileOutputStream;
 /**
  * Created by MainasuK on 2017-7-3.
  */
-public class FaceDemoControllerTest {
+public class FaceDetectControllerTest {
 
     @Test
     public void detect() throws Exception {

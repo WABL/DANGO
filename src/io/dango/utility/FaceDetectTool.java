@@ -14,10 +14,14 @@ import static org.opencv.core.CvType.*;
 /**
  * Created by 54472 on 2017/7/3.
  */
-public class FaceDetechTool {
+public class FaceDetectTool {
+
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     }
+
+    public Integer faceNumberForDetected = 0;
+
     public BufferedImage detechFace(BufferedImage bufferedImage) throws IOException {
 
         BufferedImage image = bufferedImage;
@@ -52,7 +56,9 @@ public class FaceDetechTool {
         MatOfRect faceDetections = new MatOfRect();
         faceDetector.detectMultiScale(image_final, faceDetections);
 
-        System.out.println(String.format("Detected %s faces", faceDetections.toArray().length));
+        faceNumberForDetected = faceDetections.toArray().length;
+        System.out.println(String.format("Detected %s faces", faceNumberForDetected));
+
         for(Rect rect : faceDetections.toArray()) {
             Imgproc.rectangle(image_final, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height), new Scalar(0, 255, 0), 5);
 

@@ -35,7 +35,7 @@ public class JDBCUserRepository implements UserRepository {
     @Override
     @Transactional
     public void saveUser(User user) {
-        jdbcTemplate.update("INSERT INTO user (username, password, role) VALUES (?, ?)", user.getUsername(), user.getPassword(), "ROLE_USER");
+        jdbcTemplate.update("INSERT INTO user (username, password, role) VALUES (?, ?, ?)", user.getUsername(), user.getPassword(), "ROLE_USER");
     }
 
     @Override
