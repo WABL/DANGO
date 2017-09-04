@@ -46,7 +46,7 @@ public class OAuth2Config {
 
             http.addFilterBefore(characterEncodingFilter, CsrfFilter.class)
                     .authorizeRequests()
-                    .antMatchers("/login").hasRole("USER")
+                    .antMatchers("/userinfo").hasRole("USER")
                     .antMatchers("/demo").hasRole("USER")
                     .antMatchers("/face/**").hasRole("USER")
                     .anyRequest().permitAll();

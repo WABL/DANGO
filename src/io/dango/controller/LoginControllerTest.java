@@ -37,8 +37,7 @@ public class LoginControllerTest {
 
     @Test
     public void loginToken() throws IOException {
-        String url = URL+"/oauth/token";
-        HttpClient httpClient = HttpClientBuilder.create().build();
+        String url = URL + "/oauth/token";
         Content content = Request.Post(url)
                 .addHeader("Accept","application/json")
                 .addHeader("Authorization","Basic YW5kcm9pZDpxaWRpYW4=")

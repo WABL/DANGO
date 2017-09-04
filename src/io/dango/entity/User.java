@@ -12,6 +12,7 @@ public class User {
     private String username;
     private String password;
     private String roleName;
+    private Boolean needface;
 
     public User() {
     }
@@ -20,6 +21,7 @@ public class User {
         this.id = user.id;
         this.username = user.username;
         this.password = user.password;
+        this.needface = user.needface;
     }
 
     public User(ResultSet resultSet) throws SQLException {
@@ -27,6 +29,7 @@ public class User {
         this.username = resultSet.getString("username");
         this.password = resultSet.getString("password");
         this.roleName = resultSet.getString("role");
+        this.needface = resultSet.getBoolean("needface");
     }
 
     public Long getId() {
@@ -59,5 +62,13 @@ public class User {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public Boolean getNeedface() {
+        return needface;
+    }
+
+    public void setNeedface(Boolean needface) {
+        this.needface = needface;
     }
 }
