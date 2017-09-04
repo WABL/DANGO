@@ -11,6 +11,7 @@ public class User {
     private Long id;
     private String username;
     private String password;
+    private String roleName;
 
     public User() {
     }
@@ -25,6 +26,7 @@ public class User {
         this.id = resultSet.getLong("id");
         this.username = resultSet.getString("username");
         this.password = resultSet.getString("password");
+        this.roleName = resultSet.getString("role");
     }
 
     public Long getId() {
@@ -51,4 +53,11 @@ public class User {
         this.password = password;
     }
 
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
 }

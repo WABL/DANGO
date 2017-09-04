@@ -46,10 +46,12 @@ public class OAuth2Config {
 
             http.addFilterBefore(characterEncodingFilter, CsrfFilter.class)
                     .authorizeRequests()
+                    .antMatchers("/login").hasRole("USER")
                     .antMatchers("/demo").hasRole("USER")
                     .antMatchers("/face/**").hasRole("USER")
-                    .antMatchers(HttpMethod.POST, "/").authenticated()
                     .anyRequest().permitAll();
+
+
         }
 
     }
@@ -81,12 +83,12 @@ public class OAuth2Config {
         public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
             clients
                     .inMemory()
-                    .withClient("clientapp")
+                    .withClient("android")
                     .authorizedGrantTypes("password", "refresh_token")
                     .authorities("USER")
                     .scopes("read", "write")
                     .resourceIds(RESOURCE_ID)
-                    .secret("123456");
+                    .secret("qidian");
         }
 
         @Bean

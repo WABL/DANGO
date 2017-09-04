@@ -44,5 +44,6 @@
     <orderEntry type="library" name="org.json:json:20140107" level="project" />
     <orderEntry type="library" name="Spring Security-3.2.5" level="project" />
     <orderEntry type="library" name="org.springframework.security.oauth:spring-security-oauth2:2.1.1.RELEASE" level="project" />
+    <orderEntry type="library" name="org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:1.0.2" level="project" />
   </component>
 </module>

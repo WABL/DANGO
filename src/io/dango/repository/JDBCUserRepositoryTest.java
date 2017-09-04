@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by MainasuK on 2017-7-6.
@@ -50,8 +51,8 @@ public class JDBCUserRepositoryTest {
 
     @Test
     public void verify() throws Exception {
-        boolean isVerified = userRepository.verify("user", "USER");
-        assertEquals(true, isVerified);
+        User user = userRepository.verify("user", "USER");
+        assertNotNull(user);
     }
 
 }

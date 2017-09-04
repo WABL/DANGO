@@ -2,9 +2,12 @@ package io.dango.repository;
 
 import io.dango.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.validation.constraints.Null;
 
 /**
  * Created by MainasuK on 2017-7-6.
@@ -32,13 +35,16 @@ public class JDBCUserRepository implements UserRepository {
     @Override
     @Transactional
     public void saveUser(User user) {
-        jdbcTemplate.update("INSERT INTO user (username, password) VALUES (?, ?)", user.getUsername(), user.getPassword());
+        jdbcTemplate.update("INSERT INTO user (username, password, role) VALUES (?, ?)", user.getUsername(), user.getPassword(), "ROLE_USER");
     }
 
     @Override
-    public boolean verify(String username, String passworld) {
-        return (null == jdbcTemplate.queryForObject("select * from user u where u.username = ? AND u.password = ?", (resultSet, i) -> new User(resultSet), username, passworld)) ? false : true;
-
+    public User verify(String username, String password) {
+        try {
+            return jdbcTemplate.queryForObject("select * from user u where u.username = ? AND u.password = ?", (resultSet, i) -> new User(resultSet), username, password);
+        } catch(EmptyResultDataAccessException e){
+            return null;
+        }
     }
 
     @Override

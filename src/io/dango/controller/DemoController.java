@@ -114,19 +114,4 @@ public class DemoController {
         return new ResponseEntity<>(list, headers, HttpStatus.CREATED);
     }
 
-    @RequestMapping(path = "/login", method = RequestMethod.GET)
-    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
-        boolean isVerified;
-        try {
-            isVerified = jdbcUserRepository.verify(username, password);
-            if (isVerified) {
-                return new ResponseEntity<>("YES", HttpStatus.OK);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return new ResponseEntity<>("NO", HttpStatus.OK);
-    }
-
 }
