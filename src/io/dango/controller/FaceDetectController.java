@@ -50,8 +50,14 @@ public class FaceDetectController {
         final String username = principal.getName();
         String uploadPath = ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/uploads/");
 
+        File folder = new File(uploadPath);
         File file = new File(uploadPath, username + "." + photo.getOriginalFilename().split("\\.")[1]);
         System.out.println(file.getPath());
+
+
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
         if (!file.exists()) {
             file.createNewFile();
         }
@@ -77,4 +83,5 @@ public class FaceDetectController {
 
         return ResponseEntity.ok(map);
     }
+
 }
