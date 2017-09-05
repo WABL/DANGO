@@ -106,4 +106,49 @@ public class FaceDetectTool {
 
         return image;
     }
+
+    public BufferedImage compareFace(BufferedImage originImage, BufferedImage bufferedImage) throws IOException {
+
+        BufferedImage image = bufferedImage;
+        int rows = image.getHeight();
+        int cols = image.getWidth();
+        int type = 0;
+        switch (image.getType()) {
+            case BufferedImage.TYPE_3BYTE_BGR:
+                type = CV_8UC3;
+                break;
+
+            case BufferedImage.TYPE_BYTE_GRAY:
+                type = CV_8UC1;
+                break;
+
+            case BufferedImage.TYPE_4BYTE_ABGR:
+                type = CV_8UC4;
+                break;
+        }
+
+        //chang image to Mat from BufferedImage
+        byte[] pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
+        Mat image_final = new Mat(rows, cols, type);
+        image_final.put(0, 0, pixels);
+
+        System.out.println(getClass().getResource("lbpcascade_frontalface.xml").getPath());
+        ClassPathResource resource = new ClassPathResource("lbpcascade_frontalface.xml", getClass());
+        System.out.println(resource.getFile().getCanonicalPath());
+
+        CascadeClassifier faceDetector = new CascadeClassifier(resource.getFile().getCanonicalPath());
+
+        MatOfRect faceDetections = new MatOfRect();
+        faceDetector.detectMultiScale(image_final, faceDetections);
+
+        faceNumberForDetected = faceDetections.toArray().length;
+        System.out.println(String.format("Detected %s faces", faceNumberForDetected));
+
+        for (Rect rect : faceDetections.toArray()) {
+            Imgproc.rectangle(image_final, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height), new Scalar(0, 255, 0), 5);
+
+        }
+        return matToBufferedImage(image_final);
+
+    }
 }

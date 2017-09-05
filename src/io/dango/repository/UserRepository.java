@@ -11,4 +11,5 @@ public interface UserRepository {
     void saveUser(User user);
     User verify(String username, String passworld);
     boolean removeByUsername(String username);
+    void setUserNeedUploadFace(String username, boolean flag);
 }

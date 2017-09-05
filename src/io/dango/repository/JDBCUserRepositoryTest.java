@@ -55,4 +55,15 @@ public class JDBCUserRepositoryTest {
         assertNotNull(user);
     }
 
+    @Test
+    public void setUserUploadFace() throws Exception {
+        userRepository.setUserNeedUploadFace("user", false);
+        User user = userRepository.getUserByUsername("user");
+        assertEquals(false, user.getNeedface());
+
+        userRepository.setUserNeedUploadFace("user", true);
+        user = userRepository.getUserByUsername("user");
+        assertEquals(true, user.getNeedface());
+    }
+
 }

@@ -2,12 +2,11 @@ package io.dango.controller;
 
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
+import io.dango.repository.UserRepository;
 import io.dango.utility.FaceDetectTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,18 +15,25 @@ import org.springframework.web.context.ContextLoader;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by MainasuK on 2017-7-3.
  */
 @RestController
 public class FaceDetectController {
+
+    UserRepository userRepository;
+
+    @Autowired
+    public FaceDetectController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @RequestMapping(path = "/face/detect", method = RequestMethod.POST, produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] detect(@RequestParam("photo") MultipartFile photo) throws IOException {
@@ -48,10 +54,10 @@ public class FaceDetectController {
         tool.detechFace(ImageIO.read(in));
 
         final String username = principal.getName();
-        String uploadPath = ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/uploads/");
+        String uploadPath = ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/uploads/" + username);
 
         File folder = new File(uploadPath);
-        File file = new File(uploadPath, username + "." + photo.getOriginalFilename().split("\\.")[1]);
+        File file = new File(uploadPath, UUID.randomUUID() + "." + photo.getOriginalFilename().split("\\.")[1]);
         System.out.println(file.getPath());
 
 
@@ -62,6 +68,7 @@ public class FaceDetectController {
             file.createNewFile();
         }
         photo.transferTo(file);
+        userRepository.setUserNeedUploadFace(username, false);
 
 
         Map<String, Object> map = new HashMap<>();

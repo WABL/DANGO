@@ -53,4 +53,10 @@ public class JDBCUserRepository implements UserRepository {
         return false;
     }
 
+    @Override
+    public void setUserNeedUploadFace(String username, boolean flag) {
+        jdbcTemplate.update("update user u set u.needface = ? where u.username = ?", flag, username);
+    }
+
+
 }
