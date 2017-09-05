@@ -1,10 +1,9 @@
 package io.dango.controller;
 
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
-import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.entity.ContentType;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.json.JSONObject;
@@ -57,5 +56,22 @@ public class LoginControllerTest {
         System.out.println(content.toString());
         JSONObject jsonObject = new JSONObject(content.toString());
         String token = jsonObject.getString("access_token");
+    }
+
+    @Test
+    public void loginFeedBack() throws IOException {
+        String url = URL + "/login";
+        Content content = Request.Post(url)
+                .addHeader("Content-Type", "application/json; charset=utf-8")
+                .bodyString("{\"username\": \"user\",\"password\": \"USER\"}", ContentType.APPLICATION_JSON)
+                .execute().returnContent();
+
+        System.out.println(content.toString());
+        JSONObject jsonObject = new JSONObject(content.toString());
+        String token = jsonObject.getJSONObject("auth").getString("access_token");
+        boolean needface = jsonObject.getJSONObject("user").getBoolean("needface");
+
+        System.out.println(token +" "+ needface);
+
     }
 }
