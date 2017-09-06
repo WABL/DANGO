@@ -1,0 +1,26 @@
+<component name="libraryTable">
+  <library name="com.alibaba:fastjson:1.2.38" type="repository">
+    <properties maven-id="com.alibaba:fastjson:1.2.38" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/alibaba/fastjson/1.2.38/fastjson-1.2.38.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/squareup/retrofit2/retrofit/2.1.0/retrofit-2.1.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/squareup/okhttp3/okhttp/3.6.0/okhttp-3.6.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/squareup/okio/okio/1.11.0/okio-1.11.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/javaslang/javaslang/2.0.6/javaslang-2.0.6.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/javaslang/javaslang-match/2.0.6/javaslang-match-2.0.6.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/core/jersey-common/2.23.2/jersey-common-2.23.2.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/javax/ws/rs/javax.ws.rs-api/2.0.1/javax.ws.rs-api-2.0.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/javax/annotation/javax.annotation-api/1.2/javax.annotation-api-1.2.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/bundles/repackaged/jersey-guava/2.23.2/jersey-guava-2.23.2.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/glassfish/hk2/hk2-api/2.5.0-b05/hk2-api-2.5.0-b05.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/glassfish/hk2/hk2-utils/2.5.0-b05/hk2-utils-2.5.0-b05.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/glassfish/hk2/external/aopalliance-repackaged/2.5.0-b05/aopalliance-repackaged-2.5.0-b05.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/glassfish/hk2/external/javax.inject/2.5.0-b05/javax.inject-2.5.0-b05.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/glassfish/hk2/hk2-locator/2.5.0-b05/hk2-locator-2.5.0-b05.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/javassist/javassist/3.20.0-GA/javassist-3.20.0-GA.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/glassfish/hk2/osgi-resource-locator/1.0.1/osgi-resource-locator-1.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

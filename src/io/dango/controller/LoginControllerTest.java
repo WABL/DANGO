@@ -1,15 +1,26 @@
 package io.dango.controller;
 
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.entity.ContentType;
+import org.apache.http.util.TextUtils;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.json.JSONObject;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginControllerTest {
     String URL = "http://localhost:8080";
@@ -56,6 +67,75 @@ public class LoginControllerTest {
         System.out.println(content.toString());
         JSONObject jsonObject = new JSONObject(content.toString());
         String token = jsonObject.getString("access_token");
+    }
+
+    @Test
+    public void addJson() throws IOException{
+        String url = URL + "/register";
+        Content content = Request.Post(url)
+                .addHeader("Accept","application/json")
+                .addHeader("Content-Type", "application/json; charset=utf-8")
+                .bodyString("{\"username\": \"2UserName\",\"password\": \"myPassword\"}", ContentType.APPLICATION_JSON)
+                .execute().returnContent();
+        System.out.println(content.toString());
+    }
+
+    @Test
+    public void urlConnection() {
+        String url = "http://localhost:8080/register";
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("username", "user233");
+        map.put("password", "pass");
+        JSONObject jsonObject = new JSONObject(map);
+        try {
+            java.net.URL object = new URL(url);
+            HttpURLConnection con = (HttpURLConnection) object.openConnection();
+            con.setDoInput(true);
+            con.setDoOutput(true);
+
+            con.setRequestProperty("Accept", "application/json");
+            con.setRequestProperty("Content-Type", "application/json, charset=utf-8");
+            con.getOutputStream().write(String.valueOf(jsonObject).getBytes());
+
+            int code = con.getResponseCode();
+            System.out.println(code);
+
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+
+        }
+    }
+
+    @Test
+    public void okHttp() {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("username", "user123233");
+        map.put("password", "233333");
+        JSONObject jsonObject = new JSONObject(map);
+        final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = RequestBody.create(JSON, String.valueOf(jsonObject));
+        okhttp3.Request request = new okhttp3.Request.Builder()
+                .url("http://localhost:8080/register")
+                .addHeader("Accept", "application/json")
+                .addHeader("Content-Type", "application/json, charset=utf-8")
+                .post(body)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            if(response.isSuccessful()) {
+                final String result = response.body().string();
+                if(!TextUtils.isEmpty(result)) {
+                    JSONObject obj = new JSONObject(request);
+                    System.out.println(obj);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Test

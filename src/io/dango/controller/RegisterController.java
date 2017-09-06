@@ -4,23 +4,14 @@ import io.dango.entity.User;
 import io.dango.pojo.DangoError;
 import io.dango.repository.JDBCUserRepository;
 import io.dango.utility.AuthTool;
-import io.dango.utility.FaceDetectTool;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,7 +32,7 @@ public class RegisterController {
     }
 
     @ExceptionHandler(DuplicateKeyException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public DangoError duiplicate(DuplicateKeyException e) {
         return new DangoError(101,"用户名被占用");
     }
@@ -53,7 +44,7 @@ public class RegisterController {
     }
 
     @RequestMapping(path = "/register", method = RequestMethod.POST)
-    public Map<String, Object> register(@RequestBody String json) throws JSONException, IOException {
+    public Map<String, Object> register(@RequestBody String json) throws JSONException, IOException, IOException {
         JSONObject jsonObject = new JSONObject(json);
         final String username = jsonObject.getString("username");
         final String password = jsonObject.getString("password");
