@@ -3,6 +3,7 @@ package io.dango.controller;
 import io.dango.entity.User;
 import io.dango.pojo.DangoError;
 import io.dango.repository.JDBCUserRepository;
+import io.dango.utility.AuthTool;
 import io.dango.utility.FaceDetectTool;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,29 +47,35 @@ public class RegisterController {
     }
 
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public DangoError duiplicate(Exception e) {
-        System.out.println(e.getLocalizedMessage());
         return new DangoError(102,"未知错误");
     }
 
     @RequestMapping(path = "/register", method = RequestMethod.POST)
-    public Map<String, Boolean> register(@RequestBody String json) throws JSONException {
-            JSONObject jsonObject = new JSONObject(json);
+    public Map<String, Object> register(@RequestBody String json) throws JSONException, IOException {
+        JSONObject jsonObject = new JSONObject(json);
+        final String username = jsonObject.getString("username");
+        final String password = jsonObject.getString("password");
 
-            User user = new User();
+        User user = new User();
 
-            user.setUsername(jsonObject.getString("username"));
-            user.setPassword(jsonObject.getString("password"));
+        user.setUsername(username);
+        user.setPassword(password);
 
-            jdbcUserRepository.saveUser(user);
+        jdbcUserRepository.saveUser(user);
 
-            System.out.println(user);
+        System.out.println(user);
 
-            Map<String, Boolean> map = new HashMap<>();
-            map.put("success", true);
+        User savedUser = jdbcUserRepository.getUserByUsername(username);
+        Map<String, Object> auth = AuthTool.auth(username, password);
 
-            return map;
+        Map<String, Object> map = new HashMap<>();
+        map.put("user", savedUser);
+        map.put("auth", auth);
+        map.put("success", true);
+
+        return map;
     }
 
 }

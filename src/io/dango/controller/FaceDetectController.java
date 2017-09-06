@@ -36,10 +36,8 @@ public class FaceDetectController {
     }
 
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public DangoError unknown(Exception e) {
-        System.out.println(e.getLocalizedMessage());
-        e.printStackTrace();
         return new DangoError(102,"未知错误");
     }
 
