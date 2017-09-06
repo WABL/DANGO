@@ -2,15 +2,15 @@ package io.dango.controller;
 
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
+import io.dango.entity.User;
+import io.dango.pojo.DangoError;
 import io.dango.repository.UserRepository;
 import io.dango.utility.FaceDetectTool;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,6 +33,14 @@ public class FaceDetectController {
     @Autowired
     public FaceDetectController(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public DangoError unknown(Exception e) {
+        System.out.println(e.getLocalizedMessage());
+        e.printStackTrace();
+        return new DangoError(102,"未知错误");
     }
 
     @RequestMapping(path = "/face/detect", method = RequestMethod.POST, produces = MediaType.IMAGE_JPEG_VALUE)
@@ -90,5 +98,29 @@ public class FaceDetectController {
 
         return ResponseEntity.ok(map);
     }
+
+    @RequestMapping(path = "/face/pay", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> pay(@RequestParam("photo") MultipartFile photo, @RequestParam Double cost, Principal principal) throws IOException, DangoError {
+        System.out.println("Paying…");
+
+        String username = principal.getName();
+        User user = userRepository.getUserByUsername(username);
+
+        if (user.getNeedface()) {
+            throw new DangoError(103, "需要先上传自拍");
+        }
+
+        InputStream in = new ByteArrayInputStream(photo.getBytes());
+        FaceDetectTool tool = new FaceDetectTool();
+
+        tool.compareFace(username, ImageIO.read(in));
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("pay", cost);
+        map.put("confidence", tool.confidence);
+
+        return ResponseEntity.ok(map);
+    }
+
 
 }

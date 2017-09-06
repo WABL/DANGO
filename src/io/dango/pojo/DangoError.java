@@ -3,7 +3,7 @@ package io.dango.pojo;
 /**
  * Created by MainasuK on 2017-6-30.
  */
-public class DangoError {
+public class DangoError extends Throwable {
     private int code;
     private String message;
 
