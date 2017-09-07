@@ -6,6 +6,7 @@ import io.dango.entity.User;
 import io.dango.pojo.DangoError;
 import io.dango.repository.UserRepository;
 import io.dango.utility.FaceDetectTool;
+import org.springframework.beans.NullValueInNestedPathException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -35,9 +36,16 @@ public class FaceDetectController {
         this.userRepository = userRepository;
     }
 
+    @ExceptionHandler(NullPointerException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public DangoError noPhoto(Exception e) {
+        return new DangoError(103, "需要先上传自拍");
+    }
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public DangoError unknown(Exception e) {
+        e.printStackTrace();
         return new DangoError(102,"未知错误");
     }
 
@@ -98,14 +106,14 @@ public class FaceDetectController {
     }
 
     @RequestMapping(path = "/face/pay", method = RequestMethod.POST)
-    public ResponseEntity<Map<String, Object>> pay(@RequestParam("photo") MultipartFile photo, @RequestParam Double cost, Principal principal) throws IOException, DangoError {
+    public ResponseEntity<Map<String, Object>> pay(@RequestParam("photo") MultipartFile photo, @RequestParam Double cost, Principal principal) throws IOException, NullPointerException {
         System.out.println("Paying…");
 
         String username = principal.getName();
         User user = userRepository.getUserByUsername(username);
 
         if (user.getNeedface()) {
-            throw new DangoError(103, "需要先上传自拍");
+            throw new NullPointerException();
         }
 
         InputStream in = new ByteArrayInputStream(photo.getBytes());

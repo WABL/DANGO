@@ -59,5 +59,7 @@
     </orderEntry>
     <orderEntry type="library" name="com.squareup.okio:okio:1.13.0" level="project" />
     <orderEntry type="library" name="com.alibaba:fastjson:1.2.38" level="project" />
+    <orderEntry type="library" name="opencv-320" level="project" />
+    <orderEntry type="library" name="com.squareup.okhttp3:okhttp:3.3.0" level="project" />
   </component>
 </module>
