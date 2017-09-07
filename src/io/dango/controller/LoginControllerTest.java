@@ -111,7 +111,7 @@ public class LoginControllerTest {
     @Test
     public void okHttp() {
         Map<String, String> map = new HashMap<String, String>();
-        map.put("username", "user123233");
+        map.put("username", "user13233");
         map.put("password", "233333");
         JSONObject jsonObject = new JSONObject(map);
         final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -125,11 +125,15 @@ public class LoginControllerTest {
                 .build();
         try {
             Response response = client.newCall(request).execute();
+            System.out.println(response);
             if(response.isSuccessful()) {
                 final String result = response.body().string();
                 if(!TextUtils.isEmpty(result)) {
-                    JSONObject obj = new JSONObject(request);
-                    System.out.println(obj);
+                    JSONObject obj = new JSONObject(result);
+                    String token = obj.getJSONObject("auth").getString("access_token");
+                    boolean success = obj.getBoolean("success");
+                    System.out.println("token:" + token + ", success:" + success);
+
                 }
             }
         } catch (IOException e) {
