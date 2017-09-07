@@ -21,6 +21,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class LoginControllerTest {
     String URL = "http://localhost:8080";
@@ -111,11 +112,16 @@ public class LoginControllerTest {
     @Test
     public void okHttp() {
         Map<String, String> map = new HashMap<String, String>();
-        map.put("username", "user13233");
+        map.put("username", "user15233");
         map.put("password", "233333");
         JSONObject jsonObject = new JSONObject(map);
         final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.connectTimeout(30, TimeUnit.SECONDS);
+        builder.readTimeout(30, TimeUnit.SECONDS);
+        builder.writeTimeout(30, TimeUnit.SECONDS);
+        client = builder.build();
         RequestBody body = RequestBody.create(JSON, String.valueOf(jsonObject));
         okhttp3.Request request = new okhttp3.Request.Builder()
                 .url("http://localhost:8080/register")
@@ -127,7 +133,7 @@ public class LoginControllerTest {
             Response response = client.newCall(request).execute();
             System.out.println(response);
             if(response.isSuccessful()) {
-                final String result = response.body().string();
+                String result = response.body().string();
                 if(!TextUtils.isEmpty(result)) {
                     JSONObject obj = new JSONObject(result);
                     String token = obj.getJSONObject("auth").getString("access_token");

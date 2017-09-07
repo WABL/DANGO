@@ -78,6 +78,7 @@ fabric.properties
 
 # Package Files #
 *.jar
+!opencv-320.jar
 *.war
 *.ear
 *.zip
